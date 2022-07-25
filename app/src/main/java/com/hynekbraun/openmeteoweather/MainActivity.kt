@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -97,7 +98,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                             permissionsNotAvailableContent = {}) {
-                            LaunchedEffect(key1 = true){
+                            LaunchedEffect(key1 = true) {
                                 Log.d("TAG", "Main Activity: fetch weather Launched effect")
                                 viewModel.onEvent(WeatherEvent.FetchData)
                             }
@@ -120,7 +121,15 @@ class MainActivity : ComponentActivity() {
                                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                                     content = {
                                         items(viewModel.weatherState.hourlyForecastData) { hourlyWeather ->
-                                            HourlyForecast(weatherData = hourlyWeather)
+                                            HourlyForecast(
+                                                weatherData = hourlyWeather,
+                                                modifier = Modifier.clickable {
+                                                    viewModel.onEvent(
+                                                        WeatherEvent.HourSelected(
+                                                            hourlyWeather
+                                                        )
+                                                    )
+                                                })
                                         }
                                     })
                                 Spacer(modifier = Modifier.height(16.dp))

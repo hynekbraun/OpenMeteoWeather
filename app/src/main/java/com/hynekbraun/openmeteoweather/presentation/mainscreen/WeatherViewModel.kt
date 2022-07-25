@@ -7,10 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hynekbraun.openmeteoweather.domain.CurrentLocationManager
-import com.hynekbraun.openmeteoweather.domain.LocationError
-import com.hynekbraun.openmeteoweather.domain.WeatherFetchError
-import com.hynekbraun.openmeteoweather.domain.WeatherRepository
+import com.hynekbraun.openmeteoweather.domain.*
 import com.hynekbraun.openmeteoweather.domain.mapper.toCurrentData
 import com.hynekbraun.openmeteoweather.domain.mapper.toCurrentHourlyForecastData
 import com.hynekbraun.openmeteoweather.domain.mapper.toDailyForecastData
@@ -36,8 +33,15 @@ class WeatherViewModel @Inject constructor(
 
     fun onEvent(event: WeatherEvent) {
         when (event) {
-            WeatherEvent.FetchData -> fetchData()
+            is WeatherEvent.FetchData -> fetchData()
+            is WeatherEvent.HourSelected -> hourSelected(event.selectedHour)
         }
+    }
+
+    private fun hourSelected(selectedHour: WeatherDataPerHour) {
+        weatherState = weatherState.copy(
+            currentData = CurrentData(selectedHour)
+        )
     }
 
     private fun fetchData() {

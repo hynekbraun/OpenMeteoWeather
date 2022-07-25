@@ -17,19 +17,8 @@ fun WeatherData.toCurrentData(): CurrentData {
     )
 }
 
-fun WeatherData.toCurrentHourlyForecastData(): List<HourlyForecastData> {
-    val dataPerHour = this.weatherData[0].hourlyWeather
-    val finalList: MutableList<HourlyForecastData> = mutableListOf<HourlyForecastData>()
-    dataPerHour.forEach {
-        finalList.add(
-            HourlyForecastData(
-                time = it.time,
-                temperature = it.temperature,
-                weatherType = it.weatherType
-            )
-        )
-    }
-    return finalList
+fun WeatherData.toCurrentHourlyForecastData(): List<WeatherDataPerHour> {
+    return this.weatherData[0].hourlyWeather
 }
 
 fun WeatherDataPerHour.toHourlyForecastData(): HourlyForecastData {

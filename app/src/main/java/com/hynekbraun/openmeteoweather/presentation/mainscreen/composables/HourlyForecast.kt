@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun HourlyForecast(
-    weatherData: HourlyForecastData,
+    weatherData: WeatherDataPerHour,
     modifier: Modifier = Modifier,
     textColor: Color = Color.White
 ) {
