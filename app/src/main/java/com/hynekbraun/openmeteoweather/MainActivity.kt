@@ -17,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,7 +38,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             val viewModel by viewModels<WeatherViewModel>()
 
@@ -68,10 +68,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
+            val context = LocalContext.current
 
             LaunchedEffect(key1 = 1) {
                 viewModel.eventFlow.collectLatest {
-                    snackBarHostState.showSnackbar(it.message)
+                    snackBarHostState.showSnackbar(it.asString(context))
                 }
             }
 
@@ -97,7 +98,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                             permissionsNotAvailableContent = {}) {
-                            LaunchedEffect(key1 = true){
+                            LaunchedEffect(key1 = true) {
                                 Log.d("TAG", "Main Activity: fetch weather Launched effect")
                                 viewModel.onEvent(WeatherEvent.FetchData)
                             }
