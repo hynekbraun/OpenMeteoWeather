@@ -2,7 +2,6 @@ package com.hynekbraun.openmeteoweather.domain.mapper
 
 import com.hynekbraun.openmeteoweather.domain.WeatherData
 import com.hynekbraun.openmeteoweather.domain.WeatherDataPerDay
-import com.hynekbraun.openmeteoweather.domain.WeatherDataPerHour
 import com.hynekbraun.openmeteoweather.presentation.mainscreen.util.CurrentData
 import com.hynekbraun.openmeteoweather.presentation.mainscreen.util.DailyForecastData
 import com.hynekbraun.openmeteoweather.presentation.mainscreen.util.HourlyForecastData
@@ -30,14 +29,6 @@ fun WeatherData.toCurrentHourlyForecastData(): List<HourlyForecastData> {
         )
     }
     return finalList
-}
-
-fun WeatherDataPerHour.toHourlyForecastData(): HourlyForecastData {
-    return HourlyForecastData(
-        temperature = this.temperature,
-        time = this.time,
-        weatherType = this.weatherType
-    )
 }
 
 fun WeatherDataPerDay.toDailyForecastData(): DailyForecastData {

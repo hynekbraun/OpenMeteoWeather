@@ -115,7 +115,6 @@ sealed class WeatherType(
         weatherDesc = "Thunderstorm with heavy hail",
         iconRes = R.drawable.ic_rainythunder
     )
-
     companion object {
         fun fromWMO(code: Int): WeatherType {
             return when(code) {

@@ -48,8 +48,6 @@ class MainActivity : ComponentActivity() {
                 )
             )
             val lifecycleOwner = LocalLifecycleOwner.current
-
-
             val snackBarHostState = remember { SnackbarHostState() }
 
             DisposableEffect(key1 = lifecycleOwner) {
@@ -67,7 +65,6 @@ class MainActivity : ComponentActivity() {
                     lifecycleOwner.lifecycle.removeObserver(observer)
                 }
             }
-
             val context = LocalContext.current
 
             LaunchedEffect(key1 = 1) {
@@ -75,7 +72,6 @@ class MainActivity : ComponentActivity() {
                     snackBarHostState.showSnackbar(it.asString(context))
                 }
             }
-
             OpenMeteoWeatherTheme {
                 Surface(
                     modifier = Modifier
@@ -92,7 +88,7 @@ class MainActivity : ComponentActivity() {
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Text(
-                                        text = "Need permissions to show weather",
+                                        text = getString(R.string.no_weather_screen_text),
                                         fontSize = 32.sp
                                     )
                                 }

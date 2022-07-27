@@ -16,7 +16,7 @@ import javax.inject.Singleton
 object NetworkModule {
     private const val REQUEST_TIMEOUT_SEC = 30L
     private const val MAX_PARALLEL_REQUESTS = 5
-    const val BASE_URL: String = "https://api.open-meteo.com/"
+    private const val BASE_URL: String = "https://api.open-meteo.com/"
 
     @Provides
     @Singleton

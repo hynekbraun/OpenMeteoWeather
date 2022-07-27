@@ -16,9 +16,9 @@ import androidx.compose.ui.unit.dp
 import com.hynekbraun.openmeteoweather.R
 
 @Composable
-fun WeatherItems(
+fun WeatherItem(
     value: Int,
-    unit: String,
+    description: String,
     icon: ImageVector,
 ) {
     Row(
@@ -27,12 +27,12 @@ fun WeatherItems(
     ) {
         Icon(
             imageVector = icon,
-            contentDescription = stringResource(id = R.string.contentDesc_weatherIcon),
+            contentDescription = stringResource(id = R.string.content_desc_weather_icon),
             modifier = Modifier.size(25.dp)
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
-            text = "$value$unit",
+            text = "$value$description",
             color = Color.White
         )
     }

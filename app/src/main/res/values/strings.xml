@@ -1,10 +1,16 @@
 <resources>
     <string name="app_name">Open Meteo Weather</string>
-    <string name="contentDesc_weatherIcon">Weather Icon</string>
+    <string name="content_desc_weather_icon">Weather Icon</string>
 
     //ViewModel Errors
     <string name="network_error">Network Error</string>
     <string name="gps_error">Gps Error</string>
     <string name="permission_error">Permission not granted</string>
     <string name="generic_error">Something went wrong</string>
+
+    <string name="weather_temperature">%1$d°C</string>
+    <string name="unit_hectopascal">hpa</string>
+    <string name="unit_percentage">%</string>
+    <string name="unit_kilometres_per_hour">km/h</string>
+    <string name="no_weather_screen_text">Need permissions to show weather</string>
 </resources>
