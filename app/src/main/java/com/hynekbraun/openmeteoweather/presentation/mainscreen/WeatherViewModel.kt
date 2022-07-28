@@ -7,10 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hynekbraun.openmeteoweather.domain.CurrentLocationManager
-import com.hynekbraun.openmeteoweather.domain.LocationError
-import com.hynekbraun.openmeteoweather.domain.WeatherFetchError
-import com.hynekbraun.openmeteoweather.domain.WeatherRepository
+import com.hynekbraun.openmeteoweather.domain.*
 import com.hynekbraun.openmeteoweather.domain.mapper.toCurrentData
 import com.hynekbraun.openmeteoweather.domain.mapper.toCurrentHourlyForecastData
 import com.hynekbraun.openmeteoweather.domain.mapper.toDailyForecastData
@@ -31,13 +28,24 @@ class WeatherViewModel @Inject constructor(
     var weatherState by mutableStateOf(WeatherState())
         private set
 
+    var selectedHour: WeatherDataPerHour? by mutableStateOf(null)
+        private set
+
     private val eventChannel = Channel<ToastEventHandler>()
     val eventFlow = eventChannel.receiveAsFlow()
 
     fun onEvent(event: WeatherEvent) {
         when (event) {
-            WeatherEvent.FetchData -> fetchData()
+            is WeatherEvent.FetchData -> fetchData()
+            is WeatherEvent.HourSelected -> hourSelected(event.selectedHour)
         }
+    }
+
+    private fun hourSelected(changedHour: WeatherDataPerHour) {
+        weatherState = weatherState.copy(
+            currentData = CurrentData(changedHour)
+        )
+        selectedHour = changedHour
     }
 
     private fun fetchData() {
@@ -75,8 +83,10 @@ class WeatherViewModel @Inject constructor(
                                         .map { daily ->
                                             daily
                                                 .toDailyForecastData()
-                                        }, isLoading = false
+                                        },
+                                    isLoading = false,
                                 )
+                                selectedHour = weatherState.currentData?.weatherData
                             }
                         }
                         is Resource.Error -> {
