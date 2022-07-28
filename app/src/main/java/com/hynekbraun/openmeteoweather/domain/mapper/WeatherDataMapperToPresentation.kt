@@ -2,9 +2,9 @@ package com.hynekbraun.openmeteoweather.domain.mapper
 
 import com.hynekbraun.openmeteoweather.domain.WeatherData
 import com.hynekbraun.openmeteoweather.domain.WeatherDataPerDay
+import com.hynekbraun.openmeteoweather.domain.WeatherDataPerHour
 import com.hynekbraun.openmeteoweather.presentation.mainscreen.util.CurrentData
 import com.hynekbraun.openmeteoweather.presentation.mainscreen.util.DailyForecastData
-import com.hynekbraun.openmeteoweather.presentation.mainscreen.util.HourlyForecastData
 import java.time.LocalDateTime
 
 fun WeatherData.toCurrentData(): CurrentData {
