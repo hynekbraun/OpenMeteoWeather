@@ -8,7 +8,7 @@ import com.hynekbraun.openmeteoweather.data.local.WeatherDatabase.Companion.DATA
     entities = [WeatherDataEntity::class],
     version = DATABASE_VERSION
 )
-abstract class WeatherDatabase: RoomDatabase() {
+abstract class WeatherDatabase : RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME = "movies_database"

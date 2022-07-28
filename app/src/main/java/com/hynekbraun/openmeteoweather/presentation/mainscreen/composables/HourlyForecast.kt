@@ -12,13 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.hynekbraun.openmeteoweather.domain.WeatherDataPerHour
+import com.hynekbraun.openmeteoweather.R
 import com.hynekbraun.openmeteoweather.presentation.mainscreen.util.HourlyForecastData
 import com.hynekbraun.openmeteoweather.ui.theme.darkBackGround
 import com.hynekbraun.openmeteoweather.ui.theme.lightBackGround
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 @Composable
 fun HourlyForecast(
@@ -52,7 +54,10 @@ fun HourlyForecast(
             modifier = Modifier.width(40.dp)
         )
         Text(
-            text = "${weatherData.temperature}°C",
+            text = stringResource(
+                id = R.string.weather_temperature,
+                weatherData.temperature.roundToInt()
+            ),
             color = textColor,
             fontWeight = FontWeight.Bold
         )

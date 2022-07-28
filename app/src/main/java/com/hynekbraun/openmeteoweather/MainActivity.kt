@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,7 +40,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             val viewModel by viewModels<WeatherViewModel>()
 
@@ -50,8 +50,6 @@ class MainActivity : ComponentActivity() {
                 )
             )
             val lifecycleOwner = LocalLifecycleOwner.current
-
-
             val snackBarHostState = remember { SnackbarHostState() }
 
             DisposableEffect(key1 = lifecycleOwner) {
@@ -69,14 +67,13 @@ class MainActivity : ComponentActivity() {
                     lifecycleOwner.lifecycle.removeObserver(observer)
                 }
             }
-
+            val context = LocalContext.current
 
             LaunchedEffect(key1 = 1) {
                 viewModel.eventFlow.collectLatest {
-                    snackBarHostState.showSnackbar(it.message)
+                    snackBarHostState.showSnackbar(it.asString(context))
                 }
             }
-
             OpenMeteoWeatherTheme {
                 Surface(
                     modifier = Modifier
@@ -93,7 +90,7 @@ class MainActivity : ComponentActivity() {
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Text(
-                                        text = "Need permissions to show weather",
+                                        text = getString(R.string.no_weather_screen_text),
                                         fontSize = 32.sp
                                     )
                                 }

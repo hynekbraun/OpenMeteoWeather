@@ -1,7 +1,5 @@
 package com.hynekbraun.openmeteoweather.domain
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
 import com.hynekbraun.openmeteoweather.domain.util.WeatherType
 import java.time.LocalDateTime
 

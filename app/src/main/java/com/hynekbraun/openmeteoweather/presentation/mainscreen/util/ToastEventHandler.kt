@@ -1,22 +1,33 @@
 package com.hynekbraun.openmeteoweather.presentation.mainscreen.util
 
-sealed class ToastEventHandler(val message: String) {
+import android.content.Context
+import androidx.annotation.StringRes
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.hynekbraun.openmeteoweather.R
 
-    data class NetworkToastEvent(val errorMessage: String = "Network Error") :
-        ToastEventHandler(errorMessage)
+sealed class ToastEventHandler(@StringRes val errorId: Int) {
 
-    data class IOToastEvent(val errorMessage: String = "IO Error") :
-        ToastEventHandler(errorMessage)
+    data class NetworkToastEvent(@StringRes val messageId: Int = R.string.network_error) :
+        ToastEventHandler(errorId = messageId)
 
-    data class HttpToastEvent(val errorMessage: String = "Http Error") :
-        ToastEventHandler(errorMessage)
+    data class GpsEvent(@StringRes val messageId: Int = R.string.gps_error) :
+        ToastEventHandler(messageId)
 
-    data class GpsEvent(val errorMessage: String = "Please turn on location"):
-    ToastEventHandler(errorMessage)
+    data class GenericToastEvent(@StringRes val messageId: Int = R.string.generic_error) :
+        ToastEventHandler(messageId)
 
-    data class GenericToastEvent(val errorMessage: String = "Something went wrong") :
-        ToastEventHandler(errorMessage)
+    data class PermissionEvent(@StringRes val messageId: Int = R.string.permission_error) :
+        ToastEventHandler(messageId)
 
-    data class PermissionEvent(val errorMessage: String = "Permission not granted"):
-            ToastEventHandler(errorMessage)
+    @Composable
+    fun asString(): String {
+        return stringResource(errorId)
+    }
+
+    fun asString(context: Context): String {
+        return context.getString(errorId)
+    }
 }
+
+
