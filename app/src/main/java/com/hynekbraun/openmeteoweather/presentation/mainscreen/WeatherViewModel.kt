@@ -28,6 +28,9 @@ class WeatherViewModel @Inject constructor(
     var weatherState by mutableStateOf(WeatherState())
         private set
 
+    var selectedHour: WeatherDataPerHour? by mutableStateOf(null)
+        private set
+
     private val eventChannel = Channel<ToastEventHandler>()
     val eventFlow = eventChannel.receiveAsFlow()
 
@@ -38,10 +41,11 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    private fun hourSelected(selectedHour: WeatherDataPerHour) {
+    private fun hourSelected(changedHour: WeatherDataPerHour) {
         weatherState = weatherState.copy(
-            currentData = CurrentData(selectedHour)
+            currentData = CurrentData(changedHour)
         )
+        selectedHour = changedHour
     }
 
     private fun fetchData() {
@@ -87,8 +91,10 @@ class WeatherViewModel @Inject constructor(
                                         .map { daily ->
                                             daily
                                                 .toDailyForecastData()
-                                        }, isLoading = false
+                                        },
+                                    isLoading = false,
                                 )
+                                selectedHour = weatherState.currentData?.weatherData
                             }
                         }
                         is Resource.Error -> {
