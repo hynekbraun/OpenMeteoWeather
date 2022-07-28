@@ -19,5 +19,4 @@ data class WeatherDataEntity(
     val weatherCode: Int,
     @ColumnInfo(name = "pressure")
     val pressure: Double,
-
 )

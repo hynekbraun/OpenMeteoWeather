@@ -50,5 +50,4 @@ object AppModule {
     fun provideFusedLocationClient(app: Application): FusedLocationProviderClient {
         return LocationServices.getFusedLocationProviderClient(app)
     }
-
 }

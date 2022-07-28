@@ -8,6 +8,5 @@ enum class WeatherFetchError {
 }
 
 interface WeatherRepository {
-
     suspend fun getWeatherData(location: Location?): Resource<WeatherData, WeatherFetchError>
 }

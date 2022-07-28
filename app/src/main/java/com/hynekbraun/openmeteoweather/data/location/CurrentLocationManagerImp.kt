@@ -17,8 +17,8 @@ import kotlin.coroutines.resume
 
 class CurrentLocationManagerImp
 @Inject constructor(
-    val application: Application,
-    val locationClient: FusedLocationProviderClient
+    private val application: Application,
+    private val locationClient: FusedLocationProviderClient
 ) : CurrentLocationManager {
     override suspend fun getLocation(): Resource<Location, LocationError> {
         val hasAccessFineLocationPermission = ContextCompat.checkSelfPermission(
@@ -30,6 +30,7 @@ class CurrentLocationManagerImp
 
         val locationManager =
             application.getSystemService(Context.LOCATION_SERVICE) as android.location.LocationManager
+
         val isGpsEnabled =
             locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)
 
@@ -40,7 +41,6 @@ class CurrentLocationManagerImp
             Log.d("TAG", "LocationManager: Location failed: no gps")
             return Resource.Error(error = LocationError.NO_GPS)
         }
-
         //this block coroutine where we use it and wait for the result
         return suspendCancellableCoroutine { cont ->
             locationClient.lastLocation.apply {
@@ -71,7 +71,6 @@ class CurrentLocationManagerImp
                 }
                 addOnCanceledListener {
                     Log.d("TAG", "LocationManager: Location failed: cancelled")
-
                     cont.cancel()
                 }
             }

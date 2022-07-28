@@ -4,7 +4,6 @@ import com.hynekbraun.openmeteoweather.data.location.CurrentLocationManagerImp
 import com.hynekbraun.openmeteoweather.domain.CurrentLocationManager
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
@@ -18,6 +17,4 @@ abstract class LocationModule {
     abstract fun provideCurrentLocationManager(
         currentLocationManagerImp: CurrentLocationManagerImp
     ): CurrentLocationManager
-
-
 }

@@ -48,20 +48,12 @@ class WeatherViewModel @Inject constructor(
             when (currentLocation) {
                 is Resource.Error -> {
                     fetchWeather(null)
-                    when (currentLocation.error) {
-                        LocationError.NO_PERMISSION -> {
-                            eventChannel.send(ToastEventHandler.PermissionEvent())
-                        }
-                        LocationError.NO_GPS -> {
-                            eventChannel.send(ToastEventHandler.GpsEvent())
-                        }
-                        LocationError.GENERIC_ERROR -> {
-                            eventChannel.send(ToastEventHandler.GenericToastEvent())
-                        }
-                        null -> {
-                            eventChannel.send(ToastEventHandler.GenericToastEvent())
-                        }
+                    val event = when (currentLocation.error) {
+                        LocationError.NO_PERMISSION -> ToastEventHandler.PermissionEvent()
+                        LocationError.NO_GPS -> ToastEventHandler.GpsEvent()
+                        else -> ToastEventHandler.GenericToastEvent()
                     }
+                    eventChannel.send(event)
                 }
                 is Resource.Success -> fetchWeather(currentLocation.data)
             }

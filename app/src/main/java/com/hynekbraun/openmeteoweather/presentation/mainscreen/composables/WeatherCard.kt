@@ -49,12 +49,15 @@ fun WeatherCard(
                 Spacer(modifier = Modifier.height(16.dp))
                 Image(
                     painter = painterResource(id = weatherData.weatherData.weatherType.iconRes),
-                    contentDescription = stringResource(R.string.contentDesc_weatherIcon),
+                    contentDescription = stringResource(R.string.content_desc_weather_icon),
                     modifier = Modifier.width(200.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "${weatherData.weatherData.temperature}°C",
+                    text = stringResource(
+                        id = R.string.weather_temperature,
+                        weatherData.weatherData.temperature.roundToInt()
+                    ),
                     fontSize = 50.sp,
                     color = Color.White
                 )
@@ -69,25 +72,23 @@ fun WeatherCard(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    WeatherItems(
+                    WeatherItem(
                         value = dataPerHour.pressure.roundToInt(),
-                        unit = "hpa",
+                        description = stringResource(R.string.unit_hectopascal),
                         icon = ImageVector.vectorResource(id = R.drawable.ic_pressure),
                     )
-                    WeatherItems(
+                    WeatherItem(
                         value = dataPerHour.humidity.roundToInt(),
-                        unit = "%",
+                        description = stringResource(R.string.unit_percentage),
                         icon = ImageVector.vectorResource(id = R.drawable.ic_drop),
                     )
-                    WeatherItems(
+                    WeatherItem(
                         value = dataPerHour.windSpeed.roundToInt(),
-                        unit = "km/h",
+                        description = stringResource(R.string.unit_kilometres_per_hour),
                         icon = ImageVector.vectorResource(id = R.drawable.ic_wind),
                     )
                 }
             }
         }
-
     }
-
 }

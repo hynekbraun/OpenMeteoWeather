@@ -12,7 +12,6 @@ import com.hynekbraun.openmeteoweather.domain.WeatherRepository
 import com.hynekbraun.openmeteoweather.domain.util.Resource
 import javax.inject.Inject
 
-
 class WeatherRepositoryImp @Inject constructor(
     private val api: WeatherApi,
     private val dao: WeatherDao
@@ -24,7 +23,9 @@ class WeatherRepositoryImp @Inject constructor(
         val isDbEmpty = dao.getWeather().isEmpty()
         if (location != null) {
             return try {
-                val result = api.getWeatherData(lat = location.latitude, lon = location.longitude)
+                val result = api.getWeatherData(
+                    lat = location.latitude, lon = location.longitude
+                )
                 Log.d(
                     "TAG",
                     "Repository: Fetched data: ${result.weatherData.time.size}"
